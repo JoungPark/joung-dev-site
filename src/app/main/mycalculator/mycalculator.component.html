@@ -1,0 +1,86 @@
+<div [@routerTransition] class="row align-items-center justify-content-center">
+  <div class="col-md-8">
+    <app-page-header [heading]="'MyCalculator'" [icon]="'fa-calculator'"></app-page-header>
+    <div class="col col-xl-6 col-lg-12">
+      <div class="card mb-3">
+        <div class="card-header">
+          Transportation Calculator
+        </div>
+        <div class="row" style="margin:5px">
+          <div class="col-lg-4">
+            <form role="form">
+              <fieldset class="form-group">
+                <label>Distance</label>
+                <div class="form-group input-group">
+                  <input #distance type="text" class="form-control" style="text-align:right" [(ngModel)]="distance1" name="distance" (keyup)="calcaulate()">
+                  <!-- <input #distance type="text" class="form-control" (keyup)="onkeyUp(distance.value, ratio.value, oilprice.value)" value="{{distance1}}"> -->
+                  <div class="input-group-append">
+                    <span class="input-group-text">km</span>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div class="col-lg-4">
+            <form role="form">
+              <fieldset class="form-group">
+                <label>Fuel Efficency</label>
+                <div class="form-group input-group">
+                  <input #ratio type="text" class="form-control" style="text-align:right" [(ngModel)]="ratio1" name="ratio" (keyup)="calcaulate()">
+                  <!-- <input #ratio type="text" class="form-control" value="{{ratio1}}"> -->
+                  <div class="input-group-append">
+                    <span class="input-group-text">km/L</span>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+          <div class="col-lg-4">
+            <form role="form">
+              <fieldset class="form-group">
+                <label>Oil Price</label>
+                <div class="form-group input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">$</span>
+                  </div>
+                  <input #oilprice type="text" class="form-control" style="text-align:right" [(ngModel)]="oilprice1" name="oilprice" (keyup)="calcaulate()">
+                  <div class="input-group-append">
+                    <span class="input-group-text">cent</span>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+        <div class="card-body table-responsive">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>one way</th>
+                <th>round trip</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th>Distance</th>
+                <td>{{distance.value}}km</td>
+                <td>{{distance.value * 2}}km</td>
+              </tr>
+              <tr>
+                <th>Oil</th>
+                <td>{{liter}}L</td>
+                <td>{{liter * 2}}L</td>
+              </tr>
+              <tr>
+                <th>Cost</th>
+                <td>${{cost}}</td>
+                <td>${{cost * 2}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

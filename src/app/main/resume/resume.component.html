@@ -1,0 +1,154 @@
+<div [@routerTransition] class="row align-items-center justify-content-center">
+    <div class="col-md-8">
+        <app-page-header [heading]="'My Profile'" [icon]="'fa-vcard-o'"></app-page-header>
+        <div>
+            <button class="btn btn-primary" (click)="get()">Test get</button>
+            <button class="btn btn-primary" (click)="save()">Test save</button>
+            <button type="button" class="btn btn-outline-primary" [hidden]="isEditMode" (click)="isEditMode = !isEditMode">
+                Edit
+            </button>
+            <button type="button" class="btn btn-outline-primary" [hidden]="!isEditMode">
+                Save
+            </button>
+            <button type="button" class="btn btn-outline-primary" [hidden]="!isEditMode" (click)="isEditMode = false">
+                Cancel
+            </button>
+        </div>
+        <div class="row px-3">
+            <div>
+                <img class="img-thumbnail" src="http://placehold.it/200x200" alt="">
+                <!-- <button type="button" [hidden]="!isEditMode">Upload</button> -->
+            </div>
+            <div class="text-xs-center pl-3 col-lg-8">
+                <h3>{{profile.firstName}} {{profile.lastName}}</h3>
+                <p [hidden]="isEditMode">
+                    {{profile.job}}
+                </p>
+                <input class="form-control" placeholder="Enter Job Title" value="{{profile.job}}" [hidden]="!isEditMode">
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-mobile-phone"></i>
+                    </span>&nbsp;
+                    <input class="form-control input-sm" type="text" [hidden]="!isEditMode" value="{{profile.mobile}}" placeholder="Enter Mobile Number">
+                    <a href="tel:{{profile.mobile}}" target="_top" [hidden]="isEditMode">{{profile.mobile}}</a>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-envelope-open-o"></i>
+                    </span>&nbsp;
+                    <input class="form-control input-sm" type="text" [hidden]="!isEditMode" value="{{profile.emailAddress}}" placeholder="Enter Email Address">
+                    <a href="mailto:{{profile.emailAddress}}" target="_top" [hidden]="isEditMode">{{profile.emailAddress}}</a>
+                </div>
+
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <i class="fa fa-home"></i>
+                    </span>&nbsp;
+                    <input class="form-control input-sm" type="text" [hidden]="!isEditMode" value="{{profile.homeAddress}}" placeholder="Enter Home Address">
+                    <a href="http://maps.google.com/?q={{profile.homeAddress}}" target="_top" [hidden]="isEditMode">{{profile.homeAddress}}</a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="page-header">
+            <hr>
+            <h4>Key Skill</h4>
+        </div>
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let keySkill of profile.keySkills">
+                    <h5 [hidden]="isEditMode">{{ keySkill.skillName }}</h5>
+                    <input class="form-control input-sm" type="text" [hidden]="!isEditMode" value="{{ keySkill.skillName }}" placeholder="Enter Key Skill">
+                    <div class="pl-3">
+                        <ul class="list-group">
+                            <li *ngFor="let detail of keySkill.details">
+                                <h6 [hidden]="isEditMode"> {{detail}}</h6>
+                                <input class="form-control input-sm" type="text" [hidden]="!isEditMode" value=" {{detail}}" placeholder="Enter Details of Skill">
+                            </li>
+                            <li [hidden]="!isEditMode">
+                                <div class="input-group">
+                                    <input class="form-control input-sm" type="text" [hidden]="!isEditMode" placeholder="Enter Details of Skill">
+                                    <span class="input-group-addon">
+                                        <button class="btn btn-secondary" (click)="addkeySkill()">Add</button>
+                                    </span>&nbsp;
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="list-group-item" [hidden]="!isEditMode">
+                    <div class="input-group">
+                        <input class="form-control input-sm" type="text" [hidden]="!isEditMode" placeholder="Enter Key Skill">
+                        <span class="input-group-addon">
+                            <button class="btn btn-secondary" (click)="addkeySkill()">Add</button>
+                        </span>&nbsp;
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-header">
+            <hr>
+            <h4>Experience</h4>
+        </div>
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let experience of profile.experiences">
+                    <h5>
+                        <strong>{{experience.company}}</strong>
+                        <small> ( {{experience.from}} ~ {{experience.to}} )</small>
+                    </h5>
+                    <div>
+                        <ul class="list-group">
+                            <li *ngFor="let project of experience.projects">
+                                <div class="card mb-3">
+                                    <div class="card-header">{{project.name}}
+                                        <small>( {{project.from}} ~ {{project.to}} )</small>
+                                    </div>
+                                    <table class="table table-sm">
+                                        <tbody>
+                                            <tr>
+                                                <td>Role</td>
+                                                <td>{{project.role}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Technique</td>
+                                                <td>{{project.technique}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Achievement</td>
+                                                <td>
+                                                    <ul class="list-group">
+                                                        <li *ngFor="let achievement of project.achievements">
+                                                            {{achievement}}
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="page-header">
+            <hr>
+            <h4>Education</h4>
+        </div>
+        <div>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let education of profile.educations">
+                    <h5>{{ education.name }} </h5>
+                    <h6 class="pl-3">{{education.degree}}, {{ education.major }}</h6>
+                    <p class="pl-3">{{education.from}} ~ {{education.to}}</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
