@@ -6,18 +6,27 @@
             <form role="form">
                 <div class="form-content">
                     <div class="form-group">
-                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="" placeholder="Email">
+                        <input type="text" ng-model="name" class="form-control input-underline input-lg" id="email" placeholder="Email">
                     </div>
 
                     <div class="form-group">
-                        <input type="password" class="form-control input-underline input-lg" id="" placeholder="Password">
+                        <input type="password" class="form-control input-underline input-lg" id="password" placeholder="Password">
                     </div>
                 </div>
                 <a class="btn rounded-btn" [routerLink]="['/dashboard']" (click)="onLoggedin()"> Log in </a>
                 &nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
                 &nbsp;
-                <a class="btn rounded-btn" href="/auth-api/login/facebook">Login with Facebook</a>
+                <div class="form-content">
+                    <div class="form-group">
+                        <button class="btn rounded-btn" [routerLink]="['/']" (click)="facebookLogin()" >Login with Facebook</button> 
+                    </div>
+
+                    <div class="form-group">
+                        <button class="btn rounded-btn" [routerLink]="['/']" >Login with Google</button> 
+                    </div>
+                </div>
+                
             </form>
         </div>
     </div>

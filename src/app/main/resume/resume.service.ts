@@ -8,7 +8,7 @@ import { catchError, map, tap } from 'rxjs/operators';
 @Injectable()
 export class ResumeService {
 
-  private resumeApiUrl = 'http://localhost:4200/resume-api';  // URL to web api
+  private resumeApiUrl = '/resume-api';  // URL to web api
   
   constructor(private http: HttpClient) { }
 
