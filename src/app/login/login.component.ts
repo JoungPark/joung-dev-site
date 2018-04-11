@@ -26,7 +26,19 @@ export class LoginComponent implements OnInit {
                     data => console.log(data),
                     err => console.log(err),
                     () => console.log('yay')
-                );;
+                );
+            },
+            msg => { // Error
+                console.log('Error' + msg);
+            }
+        );
+    }
+
+    public googleLogin() {
+        this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
+            res => { // Success
+                console.log(res);
+
             },
             msg => { // Error
                 console.log('Error' + msg);

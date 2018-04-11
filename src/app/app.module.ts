@@ -9,10 +9,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AuthGuard } from './shared';
 
 let config = new AuthServiceConfig([
-  // {
-  //   id: GoogleLoginProvider.PROVIDER_ID,
-  //   provider: new GoogleLoginProvider("Google-OAuth-Client-Id")
-  // },
+  {
+    id: GoogleLoginProvider.PROVIDER_ID,
+    provider: new GoogleLoginProvider("376055913394-uqsdtc5fj3qq6t2due9t7utboe2sukmb.apps.googleusercontent.com")
+  },
   {
     id: FacebookLoginProvider.PROVIDER_ID,
     provider: new FacebookLoginProvider("2018202795100458")
