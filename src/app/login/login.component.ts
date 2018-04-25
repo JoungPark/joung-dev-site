@@ -15,8 +15,25 @@ import { AuthService as MyAuthService } from '../auth.service';
 export class LoginComponent implements OnInit {
     constructor(public router: Router, private socialAuthService: SocialAuthService, private myAuthService: MyAuthService) { }
 
+    public username = 'bar';
+    public password: String = '11';
+
     ngOnInit() {
 
+    }
+
+    public loginwithFacebook() {
+        this.myAuthService.loginwithFacebook().subscribe(
+            data => { // Success
+                this.myAuthService.facebookLogin(data).subscribe(
+                    data => console.log(data),
+                    () => console.log('yay')
+                );
+            },
+            err => { // Error
+                console.log('Error' + err);
+            }
+        );
     }
 
     public facebookLogin() {
@@ -47,6 +64,43 @@ export class LoginComponent implements OnInit {
     }
 
     onLoggedin() {
-        localStorage.setItem('isLoggedin', 'true');
+        // localStorage.setItem('isLoggedin', 'true');
+        this.myAuthService.obtainAccessToken(this.username, this.password).subscribe(
+            data => {
+                console.log("success");
+                console.log(data);
+            },
+            err => {
+                alert('Invalid Credentials: ' + err.error);
+                console.log(err);
+            }
+        );
+    }
+
+    onLoggedinNew() {
+        // localStorage.setItem('isLoggedin', 'true');
+        this.myAuthService.obtainAccessTokenNew(this.username, this.password).subscribe(
+            data => {
+                console.log("success");
+                console.log(data);
+            },
+            err => {
+                alert('Invalid Credentials: ' + err.error);
+                console.log(err);
+            }
+        );
+    }
+
+    onLoggedinTest() {
+        this.myAuthService.obtainAccessTokenTest('john', '123').subscribe(
+            data => {
+                console.log("success");
+                console.log(data);
+            },
+            err => {
+                alert('Invalid Credentials: ' + err.error);
+                console.log(err);
+            }
+        );
     }
 }

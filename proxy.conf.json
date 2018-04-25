@@ -1,11 +1,11 @@
 
 {
 	"/auth-api" :{
-		"target" : "http://localhost:8080",
+		"target" : "http://localhost:9000",
 		"secure" : false
 	},
 	"/resume-api" :{
-		"target" : "http://localhost:8081",
+		"target" : "http://localhost:9001",
 		"secure" : false
 	}
 }
