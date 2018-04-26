@@ -59,6 +59,22 @@ export class AuthService {
       );
   }
 
+  signUpSocial(socialuser: any): Observable<any> {
+    const url = `${this.authApiUrl}/users/sign-up-social`;
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    console.log('signUpSocial ' + url);
+    console.log(socialuser);
+
+    return this.http.post(url, socialuser, httpOptions)
+      .pipe(
+        tap(_ => this.log(`facebookLogin=${socialuser.name}`)),
+        catchError(this.handleError<any>('facebookLogin'))
+      );
+  }
+
   obtainAccessTokenTest(username, password): Observable<any>{
     const params = new HttpParams()
     .set('username','john')

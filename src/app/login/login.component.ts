@@ -39,7 +39,8 @@ export class LoginComponent implements OnInit {
     public facebookLogin() {
         this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
             res => { // Success
-                this.myAuthService.facebookLogin(res).subscribe(
+                console.log(res);
+                this.myAuthService.signUpSocial(res).subscribe(
                     data => console.log(data),
                     err => console.log(err),
                     () => console.log('yay')
@@ -55,7 +56,6 @@ export class LoginComponent implements OnInit {
         this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then(
             res => { // Success
                 console.log(res);
-
             },
             msg => { // Error
                 console.log('Error' + msg);
