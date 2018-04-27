@@ -40,11 +40,10 @@ export class LoginComponent implements OnInit {
         this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
             res => { // Success
                 console.log(res);
-                this.myAuthService.signUpSocial(res).subscribe(
+                this.myAuthService.obtainAccessToken(res.id, res.id).subscribe(
                     data => console.log(data),
-                    err => console.log(err),
-                    () => console.log('yay')
-                );
+                    err => console.log(err)
+                )
             },
             msg => { // Error
                 console.log('Error' + msg);
@@ -66,33 +65,6 @@ export class LoginComponent implements OnInit {
     onLoggedin() {
         // localStorage.setItem('isLoggedin', 'true');
         this.myAuthService.obtainAccessToken(this.username, this.password).subscribe(
-            data => {
-                console.log("success");
-                console.log(data);
-            },
-            err => {
-                alert('Invalid Credentials: ' + err.error);
-                console.log(err);
-            }
-        );
-    }
-
-    onLoggedinNew() {
-        // localStorage.setItem('isLoggedin', 'true');
-        this.myAuthService.obtainAccessTokenNew(this.username, this.password).subscribe(
-            data => {
-                console.log("success");
-                console.log(data);
-            },
-            err => {
-                alert('Invalid Credentials: ' + err.error);
-                console.log(err);
-            }
-        );
-    }
-
-    onLoggedinTest() {
-        this.myAuthService.obtainAccessTokenTest('john', '123').subscribe(
             data => {
                 console.log("success");
                 console.log(data);

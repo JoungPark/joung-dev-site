@@ -13,29 +13,12 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   obtainAccessToken(username, password): Observable<any> {
-    const url = `${this.authApiUrl}/oauth/token`;
-    // const url = `${this.authApiUrl}/login`;
-    const params = new HttpParams()
-      .set('username', username)
-      .set('password', password)
-      .set('grant_type', 'password')
-      .set('client_id', 'barClientIdPassword');
-    const httpOptions = {
-      headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 'Authorization': 'Basic ' + btoa("barClientIdPassword:secret") })
-    };
-    
-    console.log('obtainAccessToken ' + url);
-    console.log(params.toString());
-    
-    return this.http.post(url, params.toString(), httpOptions);
-  }
-
-  obtainAccessTokenNew(username, password): Observable<any> {
     // const url = `${this.authApiUrl}/oauth/token`;
     const url = `${this.authApiUrl}/login`;
     const params = new HttpParams()
       .set('username', username)
       .set('password', password)
+      .set('logintype', 'logintype')
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8' })
     };
@@ -46,17 +29,20 @@ export class AuthService {
     return this.http.post(url, params.toString(), httpOptions);
   }
 
-  public loginwithFacebook(): Observable<any> {
-    const url = `${this.authApiUrl}/login/facebook`;
+  obtainAccessTokenSocial(socialuser: any): Observable<any> {
+    // const url = `${this.authApiUrl}/oauth/token`;
+    const url = `${this.authApiUrl}/login/social/facebook`;
+    const params = new HttpParams()
+      .set('username', socialuser.id)
+      .set('password', socialuser.id)
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+      headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8' })
     };
-
-    return this.http.get(url, httpOptions)
-      .pipe(
-        tap(_ => this.log(`facebookLogin success`)),
-        catchError(this.handleError<any>('facebookLogin fail'))
-      );
+    
+    console.log('obtainAccessToken ' + url);
+    console.log(params.toString());
+    
+    return this.http.post(url, params.toString(), httpOptions);
   }
 
   signUpSocial(socialuser: any): Observable<any> {
@@ -73,6 +59,37 @@ export class AuthService {
         tap(_ => this.log(`facebookLogin=${socialuser.name}`)),
         catchError(this.handleError<any>('facebookLogin'))
       );
+  }
+  
+  public loginwithFacebook(): Observable<any> {
+    const url = `${this.authApiUrl}/login/facebook`;
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    return this.http.get(url, httpOptions)
+      .pipe(
+        tap(_ => this.log(`facebookLogin success`)),
+        catchError(this.handleError<any>('facebookLogin fail'))
+      );
+  }
+
+  obtainAccessTokenOld(username, password): Observable<any> {
+    const url = `${this.authApiUrl}/oauth/token`;
+    // const url = `${this.authApiUrl}/login`;
+    const params = new HttpParams()
+      .set('username', username)
+      .set('password', password)
+      .set('grant_type', 'password')
+      .set('client_id', 'barClientIdPassword');
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 'Authorization': 'Basic ' + btoa("barClientIdPassword:secret") })
+    };
+    
+    console.log('obtainAccessToken ' + url);
+    console.log(params.toString());
+    
+    return this.http.post(url, params.toString(), httpOptions);
   }
 
   obtainAccessTokenTest(username, password): Observable<any>{

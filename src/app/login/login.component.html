@@ -12,19 +12,11 @@
                         <input type="password" [value]="password" (input)="password = $event.target.value" class="form-control input-underline input-lg" id="password" placeholder="Password">
                     </div>
                 </div>
-                <a class="btn rounded-btn" (click)="onLoggedin()"> Log in </a>
-                &nbsp;
-                <a class="btn rounded-btn" (click)="onLoggedinNew()"> Log in New </a>
+                <a class="btn rounded-btn" [routerLink]="['/']" (click)="onLoggedin()"> Log in </a>
                 &nbsp;
                 <a class="btn rounded-btn" [routerLink]="['/signup']">Register</a>
                 &nbsp;
-                <div class="form-content">
-                    <div class="form-group">
-                        With Facebook: <a href="/auth-api/login/facebook">click here</a>
-                    </div>
-                    <div class="form-group">
-                        <button class="btn rounded-btn" [routerLink]="['/']" (click)="loginwithFacebook()">Login with Facebook test</button> 
-                    </div>
+                <div class="form-content">s
                     <div class="form-group">
                         <button class="btn rounded-btn" [routerLink]="['/']" (click)="facebookLogin()">Login with Facebook</button> 
                     </div>
@@ -32,7 +24,6 @@
                         <button class="btn rounded-btn" [routerLink]="['/']" (click)="googleLogin()">Login with Google</button> 
                     </div>
                 </div>
-                
             </form>
         </div>
     </div>
