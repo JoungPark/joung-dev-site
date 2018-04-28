@@ -22,16 +22,15 @@ export class LoginComponent implements OnInit {
 
     }
 
-    public loginwithFacebook() {
-        this.myAuthService.loginwithFacebook().subscribe(
-            data => { // Success
-                this.myAuthService.facebookLogin(data).subscribe(
-                    data => console.log(data),
-                    () => console.log('yay')
-                );
-            },
-            err => { // Error
-                console.log('Error' + err);
+    onLoggedin() {
+        // localStorage.setItem('isLoggedin', 'true');
+        this.myAuthService.obtainAccessToken(this.username, this.password).subscribe(
+            data => {
+                this.loginSuccess(data);
+            },  
+            err => {
+                alert('Invalid Credentials: ' + err.error);
+                console.log(err);
             }
         );
     }
@@ -39,9 +38,12 @@ export class LoginComponent implements OnInit {
     public facebookLogin() {
         this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
             res => { // Success
-                console.log(res);
+                // console.log(res);
                 this.myAuthService.obtainAccessToken(res.id, res.id).subscribe(
-                    data => console.log(data),
+                    data => {
+                        // console.log(data);
+                        this.loginSuccess(data);
+                    },
                     err => console.log(err)
                 )
             },
@@ -62,17 +64,15 @@ export class LoginComponent implements OnInit {
         );
     }
 
-    onLoggedin() {
-        // localStorage.setItem('isLoggedin', 'true');
-        this.myAuthService.obtainAccessToken(this.username, this.password).subscribe(
-            data => {
-                console.log("success");
-                console.log(data);
-            },
-            err => {
-                alert('Invalid Credentials: ' + err.error);
-                console.log(err);
-            }
-        );
+    loginSuccess(response) {
+        var accessToken = this.parseJwt(response.accessToken);
+        localStorage.setItem('accessToken', JSON.stringify(accessToken));
+        this.router.navigateByUrl("/");
     }
+
+    parseJwt (token:String) : JSON {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        return JSON.parse(window.atob(base64));
+    };
 }

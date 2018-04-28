@@ -13,7 +13,16 @@ import { AuthService as MyAuthService } from '../auth.service';
 export class SignupComponent implements OnInit {
     constructor(private socialAuthService: SocialAuthService, private myAuthService: MyAuthService) {}
 
+    public name = 'bar';
+    public email = 'bar@example.com'
+    public password: String = '11';
+    public password2: String = '11';
+
     ngOnInit() {}
+
+    OnRegister() {
+
+    }
 
     signupFacebook() {
         this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(

@@ -6,7 +6,7 @@
             <form role="form">
                 <div class="form-content">
                     <div class="form-group">
-                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Full Name">
+                        <input type="text" class="form-control input-underline input-lg" id="" placeholder="Name">
                     </div>
 
                     <div class="form-group">
@@ -21,10 +21,12 @@
                     </div>
                 </div>
                 <a class="btn rounded-btn" [routerLink]="['/dashboard']"> Register </a>&nbsp;
-                <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
             </form>
             <div class="form-group">
-                <button class="btn rounded-btn" (click)="signupFacebook()">Signup with Facebook</button> 
+                <a class="btn rounded-btn" (click)="signupFacebook()">Register with Facebook</a> 
+            </div>
+            <div class="form-group">
+                <a class="btn rounded-btn" [routerLink]="['/login']"> Log in </a>
             </div>
         </div>
     </div>

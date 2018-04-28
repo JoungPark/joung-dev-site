@@ -92,7 +92,7 @@ export class AuthService {
     return this.http.post(url, params.toString(), httpOptions);
   }
 
-  obtainAccessTokenTest(username, password): Observable<any>{
+  test_obtainAccessToken(username, password): Observable<any>{
     const params = new HttpParams()
     .set('username','john')
     .set('password','123')  
