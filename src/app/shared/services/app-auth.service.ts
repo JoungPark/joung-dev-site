@@ -6,7 +6,7 @@ import { of } from 'rxjs/observable/of';
 import { catchError, map, tap } from 'rxjs/operators';
 
 @Injectable()
-export class AuthService {
+export class AppAuthService {
 
   private authApiUrl = '/auth-api';  // URL to web api
 
@@ -18,31 +18,42 @@ export class AuthService {
     const params = new HttpParams()
       .set('username', username)
       .set('password', password)
-      .set('logintype', 'logintype')
+      .set('logintype', 'logintype');
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8' })
     };
-    
-    console.log('obtainAccessToken ' + url);
-    console.log(params.toString());
     
     return this.http.post(url, params.toString(), httpOptions);
   }
 
-  obtainAccessTokenSocial(socialuser: any): Observable<any> {
-    // const url = `${this.authApiUrl}/oauth/token`;
+  obtainAccessTokenSocial(id): Observable<any> {
     const url = `${this.authApiUrl}/login/social/facebook`;
     const params = new HttpParams()
-      .set('username', socialuser.id)
-      .set('password', socialuser.id)
+      .set('id', id);
     const httpOptions = {
       headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8' })
     };
     
-    console.log('obtainAccessToken ' + url);
-    console.log(params.toString());
-    
     return this.http.post(url, params.toString(), httpOptions);
+  }
+
+  signUp(email, password, name): Observable<any> {
+    const url = `${this.authApiUrl}/users/sign-up`;
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    };
+
+    var passwordUser = new PasswordUser();
+    passwordUser.email = email;
+    passwordUser.password = password;
+    passwordUser.name = name;
+
+    const params = new HttpParams()
+      .set('email', email)
+      .set('password', password)
+      .set('name', 'name');
+
+    return this.http.post(url, passwordUser, httpOptions);
   }
 
   signUpSocial(socialuser: any): Observable<any> {
@@ -51,15 +62,12 @@ export class AuthService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     };
 
-    console.log('signUpSocial ' + url);
-    console.log(socialuser);
-
-    return this.http.post(url, socialuser, httpOptions)
-      .pipe(
-        tap(_ => this.log(`facebookLogin=${socialuser.name}`)),
-        catchError(this.handleError<any>('facebookLogin'))
-      );
+    return this.http.post(url, socialuser, httpOptions);
   }
+
+  /*
+  ** Below are test code
+  */
   
   public loginwithFacebook(): Observable<any> {
     const url = `${this.authApiUrl}/login/facebook`;
@@ -86,9 +94,6 @@ export class AuthService {
       headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 'Authorization': 'Basic ' + btoa("barClientIdPassword:secret") })
     };
     
-    console.log('obtainAccessToken ' + url);
-    console.log(params.toString());
-    
     return this.http.post(url, params.toString(), httpOptions);
   }
 
@@ -107,7 +112,6 @@ export class AuthService {
       // , params: params
     };
 
-    console.log(params.toString());
     return this.http.post('http://localhost:8081/spring-security-oauth-server/oauth/token', params, httpOptions)
     // .map(res => res.json())
     // .subscribe(
@@ -117,13 +121,6 @@ export class AuthService {
     //   },
     //   err => alert('Invalid Credentials')
     // ); 
-  }
-
-  saveToken(token) {
-    var expireDate = new Date().getTime() + (1000 * token.expires_in);
-    // Cookie.set("access_token", token.access_token, expireDate);
-    localStorage.setItem("access_token", token);
-    console.log('Obtained Access token');
   }
 
   facebookLogin(socialuser: any): Observable<any> {
@@ -163,4 +160,10 @@ export class AuthService {
       return of(result as T);
     };
   }
+}
+
+class PasswordUser {
+  public email: String;
+  public password: String;
+  public name: String;
 }

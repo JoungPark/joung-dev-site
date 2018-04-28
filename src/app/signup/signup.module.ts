@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SignupRoutingModule } from './signup-routing.module';
 import { SignupComponent } from './signup.component';
-import { AuthService as MyAuthService} from '../auth.service';
+import { AppAuthService} from '../shared/services/app-auth.service';
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import { AuthService as MyAuthService} from '../auth.service';
     HttpClientModule,
     SignupRoutingModule
   ],
-  providers: [MyAuthService],
+  providers: [AppAuthService],
   declarations: [SignupComponent]
 })
 export class SignupModule { }

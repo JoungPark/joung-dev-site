@@ -11,15 +11,18 @@ export class HeaderComponent implements OnInit, OnChanges {
     username: String;
     loggedIn: boolean;
 
-    constructor() { }
+    constructor(private router: Router) { }
 
     ngOnInit() {
         console.log("ngOnInit HeaderComponent");
-        var accessTokenString = localStorage.getItem('accessToken');
+        var accessTokenString = sessionStorage.getItem('accessToken');
         if (accessTokenString != null) {
             var accessToken = JSON.parse(accessTokenString);
             this.username = accessToken.displayusername;
-            console.log(this.username);
+            console.log(accessToken.userId);
+            this.loggedIn = true;
+        } else {
+            this.loggedIn = false;
         }
         // this.socialAuthService.authState.subscribe((user) => {
         //     this.user = user;
@@ -36,7 +39,9 @@ export class HeaderComponent implements OnInit, OnChanges {
     }
 
     onLoggedout() {
-        localStorage.removeItem('accessToken');
+        sessionStorage.removeItem('accessToken');
+        this.loggedIn = false;
+        this.router.navigateByUrl("/");
         // this.socialAuthService.signOut();
     }
 }

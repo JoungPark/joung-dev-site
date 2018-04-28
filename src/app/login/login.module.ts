@@ -5,11 +5,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { LoginRoutingModule } from './login-routing.module';
 import { LoginComponent } from './login.component';
-import { AuthService as MyAuthService} from '../auth.service';
+import { AppAuthService} from '../shared/services/app-auth.service';
 
 @NgModule({
     imports: [CommonModule, FormsModule, LoginRoutingModule, HttpClientModule],
-    providers: [MyAuthService],
+    providers: [AppAuthService],
     declarations: [LoginComponent]
 })
 export class LoginModule { }
