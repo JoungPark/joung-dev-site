@@ -15,15 +15,16 @@ export class HeaderComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         console.log("ngOnInit HeaderComponent");
-        var accessTokenString = sessionStorage.getItem('accessToken');
-        if (accessTokenString != null) {
-            var accessToken = JSON.parse(accessTokenString);
-            this.username = accessToken.displayusername;
-            console.log(accessToken.userId);
+        var jwt_access_token = sessionStorage.getItem('jwt_access_token');
+        if (jwt_access_token != null) {
+            var accessToken = this.parseJwt(jwt_access_token);
+            this.username = accessToken.user_name;
+            // console.log(accessToken.userId);
             this.loggedIn = true;
         } else {
             this.loggedIn = false;
         }
+
         // this.socialAuthService.authState.subscribe((user) => {
         //     this.user = user;
         //     this.loggedIn = (user != null);
@@ -33,6 +34,12 @@ export class HeaderComponent implements OnInit, OnChanges {
         //     console.log(this.user);
         // });
     }
+
+    parseJwt (token:String) : JSON {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        return JSON.parse(window.atob(base64));
+    };
 
     ngOnChanges(changes: SimpleChanges): void {
         throw new Error("Method not implemented.");

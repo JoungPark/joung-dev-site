@@ -9,18 +9,22 @@ import { catchError, map, tap } from 'rxjs/operators';
 export class AppAuthService {
 
   private authApiUrl = '/auth-api';  // URL to web api
+  private client_id = 'fooClientIdPassword';
+  private client_secret = 'secret';
 
   constructor(private http: HttpClient) { }
 
   obtainAccessToken(username, password): Observable<any> {
-    // const url = `${this.authApiUrl}/oauth/token`;
-    const url = `${this.authApiUrl}/login`;
+    const url = `${this.authApiUrl}/oauth/token`;
+    // const url = `${this.authApiUrl}/login`;
     const params = new HttpParams()
       .set('username', username)
       .set('password', password)
-      .set('logintype', 'logintype');
+      .set('grant_type', 'password')
+      .set('client_id', this.client_id);
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8' })
+      headers: new HttpHeaders({ 'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 
+      'Authorization': 'Basic '+btoa(this.client_id + ":" + this.client_secret) })
     };
     
     return this.http.post(url, params.toString(), httpOptions);

@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
     constructor(public router: Router, private socialAuthService: SocialAuthService, private appAuthService: AppAuthService) { }
 
     public loginFail = false;
-    public username = 'bar';
+    public username = 'bar@example.com';
     public password: String = '11';
 
     ngOnInit() {
@@ -41,17 +41,17 @@ export class LoginComponent implements OnInit {
         this.loginFail = false;
         this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID).then(
             res => { // Success
-                // console.log(res); 
-                this.appAuthService.obtainAccessTokenSocial(res.id).subscribe(
-                    data => {
-                        // console.log(data);
-                        this.loginSuccess(data);
-                    },
-                    err => {
-                        alert('Invalid Credentials: ' + err.error);
-                        console.log(err);
-                    }
-                )
+                console.log(res);
+                // this.appAuthService.obtainAccessTokenSocial(res.id).subscribe(
+                //     data => {
+                //         // console.log(data);
+                //         this.loginSuccess(data);
+                //     },
+                //     err => {
+                //         alert('Invalid Credentials: ' + err.error);
+                //         console.log(err);
+                //     }
+                // )
             },
             msg => { // Error
                 // alert('Social Login fail');
@@ -73,15 +73,8 @@ export class LoginComponent implements OnInit {
     }
 
     loginSuccess(response) {
-        var accessToken = this.parseJwt(response.accessToken);
-        sessionStorage.setItem('accessToken', JSON.stringify(accessToken));
+        sessionStorage.setItem('jwt_access_token', response.access_token);
 
         this.router.navigateByUrl("/");
     }
-
-    parseJwt (token:String) : JSON {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.parse(window.atob(base64));
-    };
 }

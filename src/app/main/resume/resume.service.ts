@@ -32,8 +32,13 @@ export class ResumeService {
   }
   getProfile(): Observable<any> {
     const url = `${this.resumeApiUrl}/profile/read?userId=12345`;
+
+    var accessTokenString = sessionStorage.getItem('jwt_access_token');   
+
+    var headers = new HttpHeaders({'Content-type': 'application/x-www-form-urlencoded; charset=utf-8', 'Authorization': 'Bearer '+ accessTokenString});
+
     let params = new HttpParams().set("userId","12345");
-    return this.http.get<any>(url)
+    return this.http.get<any>(url, {headers: headers, params: params})
       .pipe(
       tap(_ => this.log(`fetched`)),
       catchError(this.handleError<any>(`getHero`))
