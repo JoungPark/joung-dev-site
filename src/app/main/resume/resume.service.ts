@@ -13,25 +13,8 @@ export class ResumeService {
   constructor(private http: HttpClient) { }
 
   /** GET hero by id. Will 404 if id not found */
-  getProfile3(): Observable<any> {
-    const url = `${this.resumeApiUrl}/profile/userId/12345`;
-    return this.http.get<any>(url)
-      .pipe(
-      tap(_ => this.log(`fetched`)),
-      catchError(this.handleError<any>(`getHero`))
-      );
-  }
-  getProfile2(): Observable<any> {
-    const url = `${this.resumeApiUrl}/profile/read`;
-    let params = new HttpParams().set("userId","12345");
-    return this.http.get<any>(url, {headers: null, params: params})
-      .pipe(
-      tap(_ => this.log(`fetched`)),
-      catchError(this.handleError<any>(`getHero`))
-      );
-  }
   getProfile(): Observable<any> {
-    const url = `${this.resumeApiUrl}/profile/read?userId=12345`;
+    const url = `${this.resumeApiUrl}/profile/read`;
 
     var accessTokenString = sessionStorage.getItem('jwt_access_token');   
 
